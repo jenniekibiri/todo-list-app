@@ -1,7 +1,8 @@
 /*jshint eqeqeq:false */
-(function (window) {
-	'use strict';
 
+(function (window) {
+
+	'use strict';
 	/**
 	 * Creates a new client side storage object and will create an empty
 	 * collection if no collection already exists.
@@ -77,19 +78,28 @@
 	Store.prototype.save = function (updateData, callback, id) {
 		var data = JSON.parse(localStorage[this._dbName]);
 		var todos = data.todos;
+		console.log(todos)
 
 		callback = callback || function () {};
 
 		// Generate an ID
 	    var newId = ""; 
 	    var charset = "0123456789";
+//format of the Id: the Id should follow the  charset
+//and should be 6  characters
 
         for (var i = 0; i < 6; i++) {
+		// what happpens here
+
      		newId += charset.charAt(Math.floor(Math.random() * charset.length));
+			 console.log(newId)
+			
+			 	
 		}
 
 		// If an ID was actually given, find the item and update each property
 		if (id) {
+			console.log(id)
 			for (var i = 0; i < todos.length; i++) {
 				if (todos[i].id === id) {
 					for (var key in updateData) {
@@ -104,9 +114,10 @@
 		} else {
 
     		// Assign an ID
-			updateData.id = parseInt(newId);
+			updateData.id = Date.now();
+			console.log(newId)
     
-
+console.log(updateData.id)
 			todos.push(updateData);
 			localStorage[this._dbName] = JSON.stringify(data);
 			callback.call(this, [updateData]);

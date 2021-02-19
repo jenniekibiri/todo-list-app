@@ -5,8 +5,10 @@ describe("controller", function () {
   var subject, model, view;
   var setUpModel = function (todos) {
     model.read.and.callFake(function (query, callback) {
+
       callback = callback || query;
       callback(todos);
+
     });
 
     model.getCount.and.callFake(function (callback) {
@@ -74,7 +76,6 @@ describe("controller", function () {
       },
     ];
     setUpModel([todo]);
-    console.log(setUpModel([todo]));
     subject.setView("");
     expect(view.render).toHaveBeenCalledWith("showEntries", [todo]);
   });
@@ -338,9 +339,8 @@ describe("controller", function () {
       subject.setView("");
       view.trigger("itemRemove", {
         id: 2,
-        
       });
-      expect(model.remove).toHaveBeenCalledWith(2,jasmine.any(Function));
+      expect(model.remove).toHaveBeenCalledWith(2, jasmine.any(Function));
     });
 
     it("should remove an entry from the view", function () {
